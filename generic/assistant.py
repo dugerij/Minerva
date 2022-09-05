@@ -7,16 +7,15 @@ import wikipedia
 
 
 def assistant(audio):
+
     engine = pyttsx3.init()
     """
     
     """
     voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[40].id)
+    engine.setProperty('voice', voices[1].id)
     engine.say(audio)
     engine.runAndWait()
-
-assistant("Hello, Love. How may i assist you?")
 
 def greeting():
     assistant("Hello, I am Minerva. How may I assist you?")
@@ -27,7 +26,7 @@ def audio_input():
     audio_input = sr.Recognizer()
     with sr.Microphone() as source:
         print('Listening and Processing')
-        audio_input.pause_threshold = 0.4
+        audio_input.pause_threshold = 0.7
         audio = audio_input.listen(source)
 
         try:
@@ -42,17 +41,39 @@ def audio_input():
 
         return phrase
 
-def theTime(self):
+def theTime():
     """
     """
     time=str(datetime.datetime.now())
 
     print(time)
     hour = time[11:13]
-    min = time[14:16]
-    assistant(self, "The time is " + hour + "Hours and " + min + "Minutes")
+    int_hr = int(hour)
+    if int_hr >= 12:
+        int_hr = int_hr - 12
+        min = time[14:16]
+        int_min = int(min)
+        if int_min > 30:
+            min = str(60 - int_min)
+            int_hr +=1
+            hour = str(int_hr)
+            assistant("The time is " + min + "minutes to " + hour + "pm")
+        else:
+            assistant("The time is " + hour + min + "pm")
 
-def theDay(self):
+    else:
+        
+        min = time[14:16]
+        int_min = int(min)
+        if int_min > 30:
+            min = str(60 - int_min)
+            int_hr +=1
+            hour = str(int_hr)
+            assistant("The time is " + min + "minutes to " + hour + "am")
+        else:
+            assistant("The time is " + hour + min + "am")
+
+def theDay():
     """
     """
     day = datetime.datetime.today().weekday() + 1
@@ -87,10 +108,10 @@ def core_():
             assistant("Opening Google")
             webbrowser.open("www.google.com")
             continue
-        elif "what day it is" in phrase:
+        elif "what day is it" in phrase:
             theDay()
             continue
-        elif "what time is it"|"what is the time" in phrase:
+        elif "what is the time" in phrase:
             theTime()
             continue
         elif "from wikipedia" in phrase:
@@ -100,7 +121,7 @@ def core_():
             assistant("According to wikipedia")
             assistant(result)
             continue
-        elif "bye Minerva"|"That will be all" in phrase:
+        elif "that will be all" in phrase:
             assistant("Until next time, Have a good day.")
             exit()
 
