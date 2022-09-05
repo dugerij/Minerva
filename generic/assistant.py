@@ -13,6 +13,7 @@ def assistant(audio):
     
     """
     voices = engine.getProperty('voices')
+    
     engine.setProperty('voice', voices[1].id)
     engine.say(audio)
     engine.runAndWait()
@@ -22,6 +23,7 @@ def greeting():
 
 def audio_input():
     """
+    Function that takes voice input and takes some action
     """
     audio_input = sr.Recognizer()
     with sr.Microphone() as source:
@@ -43,6 +45,7 @@ def audio_input():
 
 def theTime():
     """
+    Functions that tells the time
     """
     time=str(datetime.datetime.now())
 
@@ -75,6 +78,7 @@ def theTime():
 
 def theDay():
     """
+    Functions that tells what day it is
     """
     day = datetime.datetime.today().weekday() + 1
 
@@ -95,6 +99,9 @@ def theDay():
     assistant("It's " + weekday)
 
 def core_():
+    """
+    Core function for each query or task-response combination
+    """
     greeting()
     while True:
         phrase = audio_input().lower()
@@ -127,5 +134,3 @@ def core_():
 
 if __name__ =='__main__':
     core_()
-
-    
