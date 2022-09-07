@@ -1,2 +1,2 @@
 # Minerva
-# Personal assitant project
+### Personal assitant project for multiple tasks
